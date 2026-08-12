@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo:7
+    container_name: sujetA-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  pyspark:
+    image: quay.io/jupyter/pyspark-notebook:spark-3.5.3
+    container_name: sujetA-pyspark
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./data:/home/jovyan/work/data
+      - ./notebooks:/home/jovyan/work/notebooks
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo_data:
